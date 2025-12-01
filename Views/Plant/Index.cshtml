@@ -1,0 +1,90 @@
+﻿@model IEnumerable<Greenhouse.Models.Plant>
+
+@{
+    ViewData["Title"] = "Plantas — Demo";
+}
+
+<style>
+    .banner {
+        background: linear-gradient(90deg,#f0f7ff,#f7fff0);
+        padding: 10px 14px;
+        border-radius: 8px;
+        margin-bottom: 16px;
+        font-weight: 600;
+    }
+    .badge-demo {
+        background:#ffbf69;
+        color:#222;
+        padding:4px 8px;
+        border-radius:12px;
+        font-size:0.85rem;
+        margin-left:8px;
+    }
+    .btn-add {
+        background:#2b9d8f;
+        color:#fff;
+        padding:6px 10px;
+        border-radius:6px;
+        text-decoration:none;
+        margin-bottom:8px;
+        display:inline-block;
+    }
+    .table thead {
+        background:#eef9f3;
+    }
+    .file-version {
+        margin-top:12px;
+        font-size:0.9rem;
+        color:#6b7280;
+    }
+</style>
+
+<div class="banner">
+    Painel de Visualização Estática<span class="badge-demo">DEMO</span>
+</div>
+
+<h1>Plantas</h1>
+
+<p>
+    <a asp-action="Create" class="btn-add">＋ Adicionar</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nome da Planta</th>
+            <th>Valor do Sensor</th>
+            <th>Data/Hora do Evento</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SensorValue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SensorEvent)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                </td>
+                <td>
+                    <form asp-controller="Plant" asp-action="Delete" method="post">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button type="submit" class="btn btn-danger">
+                            🗑️
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="file-version">Versão estática para avaliação — arquivo modificado visualmente.</div>
